@@ -77,7 +77,7 @@ export default function IntroView({ propName, onChange, onBack, onStart }) {
           De gemiddelde score bepaalt het maturity niveau.
         </p>
         <div className={styles.balansNote}>
-          💡 Balansregel: een propositie kan maximaal 1 niveau hoger scoren dan de laagst scorende pijler.
+          <i className="fa-solid fa-lightbulb" /> Balansregel: een propositie kan maximaal 1 niveau hoger scoren dan de laagst scorende pijler.
         </div>
       </Card>
 

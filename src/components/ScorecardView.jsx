@@ -7,9 +7,9 @@ const DIM_COLORS = ['#534AB7', '#0F6E56', '#185FA5']
 const DIM_LABELS = ['Partnerschap', 'R&I', 'Design System']
 
 const NOTE_META = [
-  { key: 'goed',       label: 'Wat gaat goed',           icon: '✅' },
-  { key: 'knelpunten', label: 'Uitdagingen / knelpunten', icon: '⚠️' },
-  { key: 'acties',     label: 'Acties en besluiten',      icon: '⚡' },
+  { key: 'goed',       label: 'Wat gaat goed',           icon: 'fa-solid fa-circle-check' },
+  { key: 'knelpunten', label: 'Uitdagingen / knelpunten', icon: 'fa-solid fa-triangle-exclamation' },
+  { key: 'acties',     label: 'Acties en besluiten',      icon: 'fa-solid fa-bolt' },
 ]
 
 export default function ScorecardView({ propName, date, answers, notes, savedBanner, onHome, onEdit, onNew }) {
@@ -23,7 +23,7 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
   return (
     <div>
       {savedBanner && (
-        <div className={styles.saveBanner}>💾 Sessie opgeslagen</div>
+        <div className={styles.saveBanner}><i className="fa-solid fa-floppy-disk" /> Sessie opgeslagen</div>
       )}
 
       <div className={styles.layout}>
@@ -66,10 +66,10 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
           {/* Notes (left panel on desktop) */}
           {hasNotes && (
             <Card style={{ marginBottom: 16 }}>
-              <div className={styles.sectionTitle}>📝 Notities</div>
+              <div className={styles.sectionTitle}><i className="fa-solid fa-note-sticky" /> Notities</div>
               {NOTE_META.filter(({ key }) => notes[key]?.trim()).map(({ key, label, icon }) => (
                 <div key={key} className={styles.noteBlock}>
-                  <div className={styles.noteLabel}>{icon} {label}</div>
+                  <div className={styles.noteLabel}><i className={icon} /> {label}</div>
                   <div className={styles.noteText}>{notes[key]}</div>
                 </div>
               ))}

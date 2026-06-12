@@ -13,7 +13,7 @@ export default function PillarView({ pillarIndex, answers, onAnswer, onPrev, onN
 
       <div className={styles.pillarHeader}>
         <div className={styles.pillarIcon} style={{ background: pillar.bg }}>
-          {pillar.emoji}
+          <i className={pillar.icon} />
         </div>
         <div>
           <div className={styles.pillarName} style={{ color: pillar.color }}>{pillar.name}</div>

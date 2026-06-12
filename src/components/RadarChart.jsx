@@ -12,49 +12,31 @@ function polar(angleDeg, r) {
   return [CX + r * Math.cos(a), CY + r * Math.sin(a)]
 }
 
-// Simple SVG icon paths for each pillar
+const ICON_SIZE = 32
+
 function PillarIcon({ index, cx, cy, color, bg }) {
-  const S = 22
-  const x = cx - S / 2
-  const y = cy - S / 2
-
-  const icons = [
-    // Partnerschap – handshake (two hands)
-    <g key="p" transform={`translate(${x},${y})`}>
-      <rect width={S} height={S} rx={5} fill={bg} />
-      <path
-        d="M4 13c0-1 .8-1.8 2-2l3-1 1 1-2 1.5L9 14h4l2-2 1 1-2 2.5c-.3.3-.7.5-1 .5H9l-1.5 1L6 16.5"
-        fill="none" stroke={color} strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round"
-      />
-      <path
-        d="M11 11l1.5-1.5c.4-.4 1-.4 1.4 0l2.6 2.6c.4.4.4 1 0 1.4L15 15"
-        fill="none" stroke={color} strokeWidth={1.4} strokeLinecap="round"
-      />
-      <path
-        d="M4 13l-1.5 1.5c-.4.4-.4 1 0 1.4L5 17.5"
-        fill="none" stroke={color} strokeWidth={1.4} strokeLinecap="round"
-      />
-    </g>,
-
-    // Research – bar chart
-    <g key="r" transform={`translate(${x},${y})`}>
-      <rect width={S} height={S} rx={5} fill={bg} />
-      <rect x={4}  y={13} width={3.5} height={5} rx={1} fill={color} />
-      <rect x={9}  y={9}  width={3.5} height={9} rx={1} fill={color} />
-      <rect x={14} y={5}  width={3.5} height={13} rx={1} fill={color} />
-    </g>,
-
-    // Design System – grid/table
-    <g key="d" transform={`translate(${x},${y})`}>
-      <rect width={S} height={S} rx={5} fill={bg} />
-      <rect x={4}  y={4}  width={6} height={6} rx={1.2} fill={color} />
-      <rect x={12} y={4}  width={6} height={6} rx={1.2} fill={color} opacity={0.5} />
-      <rect x={4}  y={12} width={6} height={6} rx={1.2} fill={color} opacity={0.5} />
-      <rect x={12} y={12} width={6} height={6} rx={1.2} fill={color} />
-    </g>,
-  ]
-
-  return icons[index]
+  const x = cx - ICON_SIZE / 2
+  const y = cy - ICON_SIZE / 2
+  return (
+    <foreignObject x={x} y={y} width={ICON_SIZE} height={ICON_SIZE}>
+      <div
+        xmlns="http://www.w3.org/1999/xhtml"
+        style={{
+          width: ICON_SIZE,
+          height: ICON_SIZE,
+          borderRadius: 7,
+          background: bg,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 15,
+          color,
+        }}
+      >
+        <i className={PILLARS[index].icon} />
+      </div>
+    </foreignObject>
+  )
 }
 
 export default function RadarChart({ scores }) {

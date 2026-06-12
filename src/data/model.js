@@ -88,7 +88,7 @@ export const PILLARS = [
     sub: 'Hoe volwassen is de samenwerking en rol van UX?',
     color: '#534AB7',
     bg: '#EEEDFE',
-    emoji: '🤝',
+    icon: 'fa-solid fa-handshake',
     questions: [
       {
         id: 'betrokkenheid',
@@ -116,7 +116,7 @@ export const PILLARS = [
     sub: 'Hoe volwassen is de inzet van onderzoek en data?',
     color: '#0F6E56',
     bg: '#E1F5EE',
-    emoji: '📊',
+    icon: 'fa-solid fa-chart-column',
     questions: [
       {
         id: 'toepassing',
@@ -150,7 +150,7 @@ export const PILLARS = [
     sub: 'Hoe volwassen is het gebruik van het Design System?',
     color: '#185FA5',
     bg: '#E6F1FB',
-    emoji: '🎨',
+    icon: 'fa-solid fa-layer-group',
     questions: [
       {
         id: 'toepassing',

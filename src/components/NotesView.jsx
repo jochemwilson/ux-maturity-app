@@ -3,9 +3,9 @@ import { PILLARS } from '../data/model.js'
 import styles from './NotesView.module.css'
 
 const NOTE_FIELDS = [
-  { key: 'goed',       label: 'Wat gaat goed?',                         icon: '✅', color: '#1D9E75', placeholder: 'Beschrijf wat er al goed werkt binnen deze propositie...' },
-  { key: 'knelpunten', label: 'Wat zijn uitdagingen / knelpunten?',       icon: '⚠️', color: '#EF9F27', placeholder: 'Beschrijf de belangrijkste knelpunten of uitdagingen...' },
-  { key: 'acties',     label: 'Acties en besluiten',                      icon: '⚡', color: '#534AB7', placeholder: 'Wat zijn de concrete vervolgstappen of besluiten?' },
+  { key: 'goed',       label: 'Wat gaat goed?',                   icon: 'fa-solid fa-circle-check',          color: '#1D9E75', placeholder: 'Beschrijf wat er al goed werkt binnen deze propositie...' },
+  { key: 'knelpunten', label: 'Wat zijn uitdagingen / knelpunten?', icon: 'fa-solid fa-triangle-exclamation',  color: '#EF9F27', placeholder: 'Beschrijf de belangrijkste knelpunten of uitdagingen...' },
+  { key: 'acties',     label: 'Acties en besluiten',               icon: 'fa-solid fa-bolt',                  color: '#534AB7', placeholder: 'Wat zijn de concrete vervolgstappen of besluiten?' },
 ]
 
 export default function NotesView({ notes, onChange, onPrev, onFinish }) {
@@ -17,7 +17,7 @@ export default function NotesView({ notes, onChange, onPrev, onFinish }) {
       {NOTE_FIELDS.map(({ key, label, icon, color, placeholder }) => (
         <Card key={key} style={{ marginBottom: 12 }}>
           <label className={styles.label} htmlFor={`note_${key}`}>
-            <span style={{ color }}>{icon}</span>
+            <i className={icon} style={{ color }} />
             {label}
           </label>
           <textarea

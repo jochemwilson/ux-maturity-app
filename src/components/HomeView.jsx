@@ -40,7 +40,7 @@ export default function HomeView({ sessions, onNew, onOpen, onDelete }) {
               </button>
               <div className={styles.deleteWrap}>
                 <Btn variant="danger" onClick={(e) => { e.stopPropagation(); onDelete(s.id) }}>
-                  🗑
+                  <i className="fa-solid fa-trash" />
                 </Btn>
               </div>
             </Card>
