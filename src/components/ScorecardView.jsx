@@ -1,4 +1,4 @@
-import { Btn, Card } from './UI.jsx'
+import { Card } from './UI.jsx'
 import RadarChart from './RadarChart.jsx'
 import { PILLARS, LEVELS, calcPillarScore, calcOverallScore, getLevel } from '../data/model.js'
 import styles from './ScorecardView.module.css'
@@ -12,7 +12,7 @@ const NOTE_META = [
   { key: 'acties',     label: 'Acties en besluiten',      icon: 'fa-solid fa-bolt' },
 ]
 
-export default function ScorecardView({ propName, date, answers, notes, savedBanner, onHome, onEdit, onNew }) {
+export default function ScorecardView({ propName, date, answers, notes, savedBanner, onHome, onEdit }) {
   const pillarScores = PILLARS.map((p) => calcPillarScore(answers[p.id]))
   const avg   = calcOverallScore(pillarScores)
   const level = getLevel(avg)
@@ -30,37 +30,51 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
         {/* ── Left panel ── */}
         <div className={styles.leftPanel}>
           <div className={styles.header}>
-            <div className={styles.eyebrow}>UX Maturity</div>
+            <button className={styles.backLink} onClick={onHome}>
+            <i className="fa-solid fa-chevron-left" /> Overzicht
+          </button>
             <div className={styles.propName}>{propName || 'Propositie'}</div>
             <div className={styles.dateLabel}>Datum: {date}</div>
           </div>
 
-          {/* Top metrics */}
-          <div className={styles.topGrid}>
-            <div className={styles.metricCard}>
-              <div className={styles.metricLabel}>Gemiddelde score</div>
-              <div className={styles.metricValue} style={{ color }}>
-                {avg != null ? avg.toFixed(1) : '–'}
-              </div>
-            </div>
-            <div className={styles.metricCard}>
-              <div className={styles.metricLabel}>UX Maturity level</div>
-              <div className={styles.metricLevel} style={{ color }}>
-                {level ? level.name : '–'}
-              </div>
-            </div>
-          </div>
-
-          {/* Pillar scores */}
-          <div className={styles.dimGrid}>
-            {PILLARS.map((p, i) => (
-              <div key={p.id} className={styles.dimCard}>
-                <div className={styles.dimLabel}>{DIM_LABELS[i]}</div>
-                <div className={styles.dimValue} style={{ color: DIM_COLORS[i] }}>
-                  {pillarScores[i] != null ? pillarScores[i].toFixed(1) : '–'}
+          {/* Combined scores block */}
+          <div className={styles.scoresBlock}>
+            <div className={styles.scoresInner}>
+              {/* Top row: gemiddelde score + maturity level */}
+              <div className={styles.topRow}>
+                <div className={styles.avgScore}>
+                  <span className={styles.metricLabel}>Gemiddelde score</span>
+                  <span className={styles.metricValue} style={{ color }}>
+                    {avg != null ? avg.toFixed(1) : '–'}
+                  </span>
+                </div>
+                <div className={styles.levelScore}>
+                  <div className={styles.metricLabel}>UX Maturity level</div>
+                  <div className={styles.metricLevel} style={{ color }}>
+                    {level ? level.name : '–'}
+                  </div>
                 </div>
               </div>
-            ))}
+
+              {/* Bottom row: pillar scores */}
+              <div className={styles.dimGrid}>
+                {PILLARS.map((p, i) => (
+                  <div key={p.id} className={`${styles.dimCell} ${i > 0 ? styles.dimCellBorder : ''}`}>
+                    <div className={styles.dimLabel}>{DIM_LABELS[i]}</div>
+                    <div className={styles.dimValue} style={{ color: DIM_COLORS[i] }}>
+                      {pillarScores[i] != null ? pillarScores[i].toFixed(1) : '–'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Pencil edit button */}
+            <div className={styles.editRow}>
+              <button className={styles.editBtn} onClick={onEdit} aria-label="Aanpassen">
+                <i className="fa-solid fa-pen" />
+              </button>
+            </div>
           </div>
 
           {/* Notes (left panel on desktop) */}
@@ -113,14 +127,6 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
         </div>
       </div>
 
-      {/* Actions – full width below layout */}
-      <div className={styles.actions}>
-        <Btn onClick={onHome}>← Alle sessies</Btn>
-        <div className={styles.actionsRight}>
-          <Btn onClick={onEdit}>Aanpassen</Btn>
-          <Btn variant="primary" onClick={onNew}>Nieuwe assessment</Btn>
-        </div>
-      </div>
     </div>
   )
 }

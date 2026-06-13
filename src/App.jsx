@@ -16,6 +16,7 @@ import IntroView    from './components/IntroView.jsx'
 import PillarView   from './components/PillarView.jsx'
 import NotesView    from './components/NotesView.jsx'
 import ScorecardView from './components/ScorecardView.jsx'
+import { Btn } from './components/UI.jsx'
 import styles from './App.module.css'
 
 // Views: 'home' | 'intro' | 'pillar' | 'notes' | 'scorecard'
@@ -108,10 +109,17 @@ export default function App() {
     <div className={styles.shell}>
       <header className={styles.topbar}>
         <div className={styles.topbarInner}>
-          <div className={styles.logo} onClick={() => { reset(); setView('home') }}>
-            <span className={styles.logoMark}>U</span>
-            <span className={styles.logoText}>UX Maturity</span>
+          <div className={styles.topbarLeft}>
+            <div className={styles.logo} onClick={() => { reset(); setView('home') }}>
+              <span className={styles.logoMark}>U</span>
+              <span className={styles.logoText}>UX Maturity</span>
+            </div>
           </div>
+          {view === 'scorecard' && (
+            <Btn variant="primary" onClick={() => { reset(); setView('intro') }}>
+              + Nieuwe assessment
+            </Btn>
+          )}
         </div>
       </header>
 
@@ -169,8 +177,7 @@ export default function App() {
               notes={notes}
               savedBanner={savedBanner}
               onHome={() => { setSavedBanner(false); setView('home') }}
-              onEdit={() => { setSavedBanner(false); setPillarIdx(PILLARS.length - 1); setView('pillar') }}
-              onNew={() => { reset(); setView('intro') }}
+              onEdit={() => { setSavedBanner(false); setPillarIdx(0); setView('pillar') }}
             />
           )}
         </div>
