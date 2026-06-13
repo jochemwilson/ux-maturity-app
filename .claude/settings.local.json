@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Skill(run)",
-      "Skill(run:*)"
+      "Skill(run:*)",
+      "mcp__visualize__show_widget"
     ]
   }
 }
