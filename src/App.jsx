@@ -111,7 +111,7 @@ export default function App() {
         <div className={styles.topbarInner}>
           <div className={styles.topbarLeft}>
             <div className={styles.logo} onClick={() => { reset(); setView('home') }}>
-              <span className={styles.logoMark}>U</span>
+              <span className={styles.logoMark}>UX</span>
               <span className={styles.logoText}>UX Maturity</span>
             </div>
           </div>

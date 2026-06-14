@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Card } from './UI.jsx'
 import RadarChart from './RadarChart.jsx'
 import { PILLARS, LEVELS, calcPillarScore, calcOverallScore, getLevel } from '../data/model.js'
@@ -7,9 +8,9 @@ const DIM_COLORS = ['#534AB7', '#0F6E56', '#185FA5']
 const DIM_LABELS = ['Partnerschap', 'R&I', 'Design System']
 
 const NOTE_META = [
-  { key: 'goed',       label: 'Wat gaat goed',           icon: 'fa-solid fa-circle-check' },
-  { key: 'knelpunten', label: 'Uitdagingen / knelpunten', icon: 'fa-solid fa-triangle-exclamation' },
-  { key: 'acties',     label: 'Acties en besluiten',      icon: 'fa-solid fa-bolt' },
+  { key: 'goed',       label: 'Wat gaat goed?',            isActies: false },
+  { key: 'knelpunten', label: 'Uitdagingen/knelpunten',    isActies: false },
+  { key: 'acties',     label: 'Acties/besluiten',          isActies: true  },
 ]
 
 export default function ScorecardView({ propName, date, answers, notes, savedBanner, onHome, onEdit }) {
@@ -20,10 +21,21 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
 
   const hasNotes = NOTE_META.some(({ key }) => notes[key]?.trim())
 
+  const [toastVisible, setToastVisible] = useState(false)
+  useEffect(() => {
+    if (savedBanner) {
+      setToastVisible(true)
+      const t = setTimeout(() => setToastVisible(false), 3000)
+      return () => clearTimeout(t)
+    }
+  }, [savedBanner])
+
   return (
     <div>
-      {savedBanner && (
-        <div className={styles.saveBanner}><i className="fa-solid fa-floppy-disk" /> Sessie opgeslagen</div>
+      {toastVisible && (
+        <div className={`${styles.toast} ${toastVisible ? styles.toastIn : ''}`}>
+          <i className="fa-solid fa-circle-check" /> Maturity score opgeslagen
+        </div>
       )}
 
       <div className={styles.layout}>
@@ -31,10 +43,10 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
         <div className={styles.leftPanel}>
           <div className={styles.header}>
             <button className={styles.backLink} onClick={onHome}>
-            <i className="fa-solid fa-chevron-left" /> Overzicht
-          </button>
-            <div className={styles.propName}>{propName || 'Propositie'}</div>
+              <i className="fa-solid fa-chevron-left" /> Overzicht
+            </button>
             <div className={styles.dateLabel}>Datum: {date}</div>
+            <div className={styles.propName}>{propName || 'Propositie'}</div>
           </div>
 
           {/* Combined scores block */}
@@ -43,7 +55,7 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
               {/* Top row: gemiddelde score + maturity level */}
               <div className={styles.topRow}>
                 <div className={styles.avgScore}>
-                  <span className={styles.metricLabel}>Gemiddelde score</span>
+                  <span className={styles.metricLabel}>Gemiddelde Score</span>
                   <span className={styles.metricValue} style={{ color }}>
                     {avg != null ? avg.toFixed(1) : '–'}
                   </span>
@@ -69,43 +81,48 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
               </div>
             </div>
 
-            {/* Pencil edit button */}
-            <div className={styles.editRow}>
-              <button className={styles.editBtn} onClick={onEdit} aria-label="Aanpassen">
-                <i className="fa-solid fa-pen" />
-              </button>
-            </div>
           </div>
 
-          {/* Notes (left panel on desktop) */}
+          {/* Edit link – outside the card */}
+          <div className={styles.editRow}>
+            <button className={styles.editBtn} onClick={onEdit}>
+              <i className="fa-solid fa-pen" /> wijzig
+            </button>
+          </div>
+
+          {/* Notities */}
           {hasNotes && (
-            <Card style={{ marginBottom: 16 }}>
-              <div className={styles.sectionTitle}><i className="fa-solid fa-note-sticky" /> Notities</div>
-              {NOTE_META.filter(({ key }) => notes[key]?.trim()).map(({ key, label, icon }) => (
-                <div key={key} className={styles.noteBlock}>
-                  <div className={styles.noteLabel}><i className={icon} /> {label}</div>
-                  <div className={styles.noteText}>{notes[key]}</div>
+            <div className={styles.notitiesBlock}>
+              <div className={styles.notitiesHeader}>Notities</div>
+              {NOTE_META.filter(({ key }) => notes[key]?.trim()).map(({ key, label, isActies }) => (
+                <div key={key} className={styles.notitieItem}>
+                  <div className={styles.notitieLabel}>{label}</div>
+                  {isActies ? (
+                    <ul className={styles.actiesList}>
+                      {notes[key].split('\n').filter(l => l.trim()).map((line, i) => (
+                        <li key={i}>{line.trim()}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className={styles.notitieText}>{notes[key]}</div>
+                  )}
                 </div>
               ))}
-            </Card>
+            </div>
           )}
 
-          {/* Maturity levels legend */}
-          <Card style={{ marginBottom: 0 }}>
-            <div className={styles.sectionTitle}>Maturity levels</div>
+          {/* Maturity levels */}
+          <div className={styles.levelsBlock}>
+            <div className={styles.levelsHeader}>Maturity Levels</div>
             {[...LEVELS].reverse().map((l) => {
               const isActive = level && l.name === level.name
               return (
-                <div
-                  key={l.name}
-                  className={`${styles.levelRow} ${isActive ? styles.levelActive : ''}`}
-                  style={isActive ? { borderColor: l.color } : {}}
-                >
+                <div key={l.name} className={`${styles.levelRow} ${isActive ? styles.levelRowActive : ''}`}>
                   <div className={styles.levelDot} style={{ background: l.color }}>
                     {LEVELS.indexOf(l) + 1}
                   </div>
                   <div className={styles.levelText}>
-                    <div className={styles.levelName} style={isActive ? { color: l.color } : {}}>
+                    <div className={styles.levelName} style={isActive ? { color: l.color, fontWeight: 700 } : {}}>
                       {l.name}
                     </div>
                     <div className={styles.levelDesc}>{l.desc}</div>
@@ -116,7 +133,7 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
                 </div>
               )
             })}
-          </Card>
+          </div>
         </div>
 
         {/* ── Right panel: radar chart ── */}
@@ -126,7 +143,6 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
           </Card>
         </div>
       </div>
-
     </div>
   )
 }

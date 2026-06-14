@@ -99,19 +99,18 @@ export default function RadarChart({ scores }) {
         strokeLinejoin="round"
       />
 
-      {/* Data point circles */}
-      {dataPoints.map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r={6} fill={colors[i]} stroke="#fff" strokeWidth={2} />
-      ))}
-
-      {/* Score labels near points */}
+      {/* Data point circles with score labels */}
       {dataPoints.map(([x, y], i) => {
         const s = scores[i]
-        if (!s) return null
+        const label = s ? s.toFixed(1) : '0'
+        const r = 16
         return (
-          <text key={i} x={x} y={y - 12} fontSize={11} fill={colors[i]} fontWeight="700" textAnchor="middle">
-            {s.toFixed(1)}
-          </text>
+          <g key={i}>
+            <circle cx={x} cy={y} r={r} fill={colors[i]} stroke="#fff" strokeWidth={2} />
+            <text x={x} y={y + 4} fontSize={10} fill="#fff" fontWeight="700" textAnchor="middle">
+              {label}
+            </text>
+          </g>
         )
       })}
 

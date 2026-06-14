@@ -1,14 +1,26 @@
-.saveBanner {
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1a1a2e;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 14px;
-  background: var(--green-light);
-  border-radius: var(--radius-md);
-  margin-bottom: 16px;
-  font-size: 13px;
-  color: var(--green-dark);
-  font-weight: 500;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.toastIn {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* ── Two-column layout ─────────────────────────────── */
@@ -42,7 +54,6 @@
 
 /* ── Header ──────────────────────────────────────────── */
 
-.header { }
 .backLink {
   background: none;
   border: none;
@@ -57,8 +68,9 @@
   transition: color 0.15s;
 }
 .backLink:hover { color: var(--text-primary); }
+
+.dateLabel { font-size: 13px; color: var(--text-secondary); margin-bottom: 2px; }
 .propName  { font-size: 26px; font-weight: 700; line-height: 1.2; color: #004682; }
-.dateLabel { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
 
 /* ── Combined scores block ────────────────────────────── */
 
@@ -70,9 +82,6 @@
 }
 
 .scoresInner {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  margin: 12px 12px 0;
   overflow: hidden;
 }
 
@@ -88,6 +97,7 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  padding-right: 16px;
 }
 
 .levelScore {
@@ -129,51 +139,85 @@
   color: var(--text-muted);
   cursor: pointer;
   padding: 4px 6px;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
   transition: color 0.15s;
 }
 .editBtn:hover { color: var(--text-primary); }
 
-/* ── Notes ───────────────────────────────────────────── */
+/* ── Notities ─────────────────────────────────────────── */
 
-.sectionTitle {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
+.notitiesBlock {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
-.noteBlock {
-  background: var(--bg-surface);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  margin-bottom: 8px;
-}
-.noteLabel {
-  font-size: 11px;
+
+.notitiesHeader {
+  font-size: 10px;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  padding: 10px 14px 6px;
+}
+
+.notitieItem {
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.notitieLabel {
+  font-size: 11px;
+  color: var(--text-muted);
   margin-bottom: 4px;
 }
-.noteText { font-size: 13px; color: var(--text-primary); line-height: 1.65; white-space: pre-wrap; }
+
+.notitieText {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.actiesList {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.8;
+}
 
 /* ── Maturity levels ──────────────────────────────────── */
+
+.levelsBlock {
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.levelsHeader {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 14px 6px;
+}
 
 .levelRow {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid #f2f2f2;
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
 }
-.levelRow:last-child { border-bottom: none; }
-.levelActive {
-  border: 1.5px solid #ccc;
-  border-radius: var(--radius-md);
-  padding: 8px 10px;
-  margin: 0 -10px;
-}
+
 .levelDot {
   width: 22px;
   height: 22px;
@@ -187,8 +231,13 @@
   flex-shrink: 0;
   margin-top: 1px;
 }
+
+.levelRowActive {
+  background: #f7f9ff;
+}
+
 .levelText  { flex: 1; }
-.levelName  { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.levelName  { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 .levelDesc  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4; }
 .levelFocus {
   font-size: 11px;
@@ -201,8 +250,7 @@
   display: inline-block;
 }
 
-
-/* ── Responsive: stack on narrow screens ─────────────── */
+/* ── Responsive ──────────────────────────────────────── */
 
 @media (max-width: 800px) {
   .layout {

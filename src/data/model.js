@@ -200,10 +200,12 @@ export function calcOverallScore(pillarScores) {
   return avg - min > 1 ? min + 1 : avg
 }
 
-/** Find the maturity level object for a given score */
+/** Find the maturity level object for a given score.
+ *  Decimaal >= 0.5 rondt af naar boven: 2.7 → level 3 (Gestructureerd). */
 export function getLevel(score) {
   if (score === null || score === undefined) return null
-  return LEVELS.find((l) => score >= l.range[0] && score <= l.range[1]) || LEVELS[0]
+  const effective = (score % 1) >= 0.5 ? Math.ceil(score) : score
+  return LEVELS.find((l) => effective >= l.range[0] && effective <= l.range[1]) || LEVELS[0]
 }
 
 // ── Session helpers ────────────────────────────────────────────────────────
