@@ -1,12 +1,26 @@
 .list { margin-top: 28px; }
-.listLabel {
+
+/* ── Kwartaal groepen ─────────────────────────────── */
+
+.quarter { margin-bottom: 24px; }
+
+.quarterLabel {
   font-size: 11px;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-weight: 500;
-  margin-bottom: 10px;
+  font-weight: 600;
+  margin-bottom: 8px;
 }
+
+.quarterEmpty {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 10px 0 4px;
+}
+
+/* ── Session card ─────────────────────────────────── */
 
 .sessionCard {
   display: flex;
@@ -50,16 +64,77 @@
   background: var(--bg-surface);
   border-radius: var(--radius-sm);
   padding: 4px 8px;
-  min-width: 36px;
+  min-width: 40px;
 }
 .dimLabel { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.7; }
 .dimVal { font-size: 13px; font-weight: 600; }
 
-.deleteWrap {
+/* ── Actie knoppen ────────────────────────────────── */
+
+.actions {
   display: flex;
   align-items: center;
-  padding: 0 8px;
   border-left: 1px solid var(--border);
+}
+
+.iconBtn {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-right: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+.iconBtn:last-child { border-right: none; }
+.iconBtn:hover { background: var(--bg-surface); color: var(--text-primary); }
+.iconBtnDanger:hover { background: #fff0f0; color: #c0392b; }
+
+/* ── Confirmation dialog ──────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.dialog {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px 20px;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.dialogTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.dialogText {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.dialogActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
 }
 
 .empty {

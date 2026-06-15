@@ -131,6 +131,7 @@ export default function App() {
               onNew={() => { reset(); setView('intro') }}
               onOpen={handleOpenSession}
               onDelete={deleteSession}
+              onEdit={(id) => { handleOpenSession(id); setPillarIdx(0); setView('pillar') }}
             />
           )}
 
