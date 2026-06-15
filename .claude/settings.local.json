@@ -3,7 +3,8 @@
     "allow": [
       "Skill(run)",
       "Skill(run:*)",
-      "mcp__visualize__show_widget"
+      "mcp__visualize__show_widget",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
