@@ -45,8 +45,13 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
             <button className={styles.backLink} onClick={onHome}>
               <i className="fa-solid fa-chevron-left" /> Overzicht
             </button>
-            <div className={styles.dateLabel}>Datum: {date}</div>
             <div className={styles.propName}>{propName || 'Propositie'}</div>
+            <div className={styles.dateLine}>
+              <div className={styles.dateLabel}>Assessment: {date}</div>
+              <button className={styles.editBtn} onClick={onEdit}>
+                <i className="fa-solid fa-pen" /> wijzig
+              </button>
+            </div>
           </div>
 
           {/* Combined scores block */}
@@ -81,13 +86,6 @@ export default function ScorecardView({ propName, date, answers, notes, savedBan
               </div>
             </div>
 
-          </div>
-
-          {/* Edit link – outside the card */}
-          <div className={styles.editRow}>
-            <button className={styles.editBtn} onClick={onEdit}>
-              <i className="fa-solid fa-pen" /> wijzig
-            </button>
           </div>
 
           {/* Notities */}

@@ -69,7 +69,13 @@
 }
 .backLink:hover { color: var(--text-primary); }
 
-.dateLabel { font-size: 13px; color: var(--text-secondary); margin-bottom: 2px; }
+.dateLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+.dateLabel { font-size: 13px; color: var(--text-secondary); }
 .propName  { font-size: 26px; font-weight: 700; line-height: 1.2; color: #004682; }
 
 /* ── Combined scores block ────────────────────────────── */
@@ -106,7 +112,14 @@
 }
 
 .metricLabel { font-size: 11px; color: var(--text-muted); font-weight: 500; line-height: 1.3; }
-.metricValue { font-size: 28px; font-weight: 700; line-height: 1; }
+.metricValue {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 4px 10px;
+}
 .metricLevel { font-size: 16px; font-weight: 600; margin-top: 4px; line-height: 1.3; }
 
 .dimGrid {
@@ -126,12 +139,6 @@
 
 .dimLabel { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; font-weight: 500; }
 .dimValue { font-size: 20px; font-weight: 700; line-height: 1; }
-
-.editRow {
-  display: flex;
-  justify-content: flex-end;
-  padding: 4px 10px 6px;
-}
 
 .editBtn {
   background: none;
