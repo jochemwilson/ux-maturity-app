@@ -69,9 +69,9 @@ export default function HomeView({ sessions, onNew, onOpen, onDelete, onEdit }) 
             <div key={label} className={styles.quarter}>
               <div className={styles.quarterLabel}>{label}</div>
               {items.length === 0 ? (
-                <div className={styles.quarterEmpty}>
-                  Er zijn nog geen assessments weer te geven.
-                </div>
+                <Card className={styles.quarterEmpty} style={{ padding: '12px 16px' }}>
+                  Er zijn geen assessments weer te geven.
+                </Card>
               ) : (
                 items.map((s) => (
                   <Card key={s.id} className={styles.sessionCard} style={{ padding: 0 }}>
